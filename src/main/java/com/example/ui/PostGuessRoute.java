@@ -122,6 +122,7 @@ public class PostGuessRoute implements TemplateViewRoute {
 
     // did you win?
     if (correct) {
+      //TODO change the game statistic here for winning
       return youWon(vm, session);
     }
     // no, but you have more guesses?
@@ -131,6 +132,7 @@ public class PostGuessRoute implements TemplateViewRoute {
     }
     // otherwise, you lost
     else {
+      //TODO change the game statistic here for losing
       return youLost(vm, session);
     }
   }

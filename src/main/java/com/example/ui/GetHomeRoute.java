@@ -70,11 +70,13 @@ public class GetHomeRoute implements TemplateViewRoute {
     vm.put(TITLE_ATTR, TITLE);
 
     // report application-wide game statistics
+    //TODO add global statistics here
     vm.put(GAME_STATS_MSG_ATTR, gameCenter.getGameStatsMessage());
 
     // if this is a brand new browser session
     if (httpSession.isNew()) {
       // render the Game Form view
+      //TODO add in session game stats here
       vm.put(NEW_SESSION_ATTR, true);
       return new ModelAndView(vm, VIEW_NAME);
     }

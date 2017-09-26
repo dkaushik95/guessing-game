@@ -109,6 +109,7 @@ public class GuessGame {
     }
     //
     howManyGuessesLeft--;
+    //if yes, increase the counter of number of wins locally and globally
     return myGuess == numberToGuess;
   }
 
