@@ -13,6 +13,14 @@
       <p>
         ${gameStatsMessage}
       </p>
+      <p>
+        ${gameStatsAvgWins}
+      </p>
+
+      <h3> Local Stats </h3>
+      <p>
+        ${localStatsMessage}
+      </p>
       
       <#if newSession>
         <p>

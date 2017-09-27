@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import com.example.model.GameStatistics;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -122,7 +123,10 @@ public class PostGuessRoute implements TemplateViewRoute {
 
     // did you win?
     if (correct) {
-      //TODO change the game statistic here for winning
+        GameStatistics.setLocalWins(GameStatistics.getLocalWins() + 1);
+        GameStatistics.setGlobalWins(GameStatistics.getGlobalWins() + 1);
+        GameStatistics.setTotalPlays(GameStatistics.getTotalPlays() + 1);
+        GameStatistics.setLocalPlays(GameStatistics.getLocalPlays() + 1);
       return youWon(vm, session);
     }
     // no, but you have more guesses?
@@ -132,7 +136,10 @@ public class PostGuessRoute implements TemplateViewRoute {
     }
     // otherwise, you lost
     else {
-      //TODO change the game statistic here for losing
+      synchronized (this){
+        GameStatistics.setTotalPlays(GameStatistics.getTotalPlays() + 1);
+        GameStatistics.setLocalPlays(GameStatistics.getLocalPlays() + 1);
+      }
       return youLost(vm, session);
     }
   }
@@ -159,6 +166,8 @@ public class PostGuessRoute implements TemplateViewRoute {
     gameCenter.end(session);
     // report application-wide game statistics
     vm.put(GetHomeRoute.GAME_STATS_MSG_ATTR, gameCenter.getGameStatsMessage());
+    vm.put(GetHomeRoute.GAME_AVG_WINS_MSG_ATTR, gameCenter.getGameAvgMessage());
+    vm.put(GetHomeRoute.GAME_STATS_LOCAL_ATTR, gameCenter.getLocalStatsMessage());
     vm.put(YOU_WON_ATTR, youWon);
     return new ModelAndView(vm, GetHomeRoute.VIEW_NAME);
   }

@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import com.example.appl.GameCenter;
 
+import com.example.model.GameStatistics;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -30,9 +31,11 @@ public class GetHomeRoute implements TemplateViewRoute {
 
   static final String TITLE_ATTR = "title";
   static final String GAME_STATS_MSG_ATTR = "gameStatsMessage";
+  static final String GAME_AVG_WINS_MSG_ATTR = "gameStatsAvgWins";
   static final String NEW_SESSION_ATTR = "newSession";
   static final String TITLE = "Welcome to the Guessing Game";
   static final String VIEW_NAME = "home.ftl";
+  static final String GAME_STATS_LOCAL_ATTR = "localStatsMessage";
 
   //
   // Attributes
@@ -72,14 +75,19 @@ public class GetHomeRoute implements TemplateViewRoute {
     // report application-wide game statistics
     //TODO add global statistics here
     vm.put(GAME_STATS_MSG_ATTR, gameCenter.getGameStatsMessage());
+    vm.put(GAME_AVG_WINS_MSG_ATTR, gameCenter.getGameAvgMessage());
 
     // if this is a brand new browser session
     if (httpSession.isNew()) {
       // render the Game Form view
       //TODO add in session game stats here
+      GameStatistics.setLocalPlays(0);
+      GameStatistics.setLocalWins(0);
       vm.put(NEW_SESSION_ATTR, true);
+      vm.put(GAME_STATS_LOCAL_ATTR, gameCenter.getLocalStatsMessage());
       return new ModelAndView(vm, VIEW_NAME);
     }
+
     else {
       // there is a game already being played
       // so redirect the user to the Game view
