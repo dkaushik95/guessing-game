@@ -27,8 +27,10 @@ public class PostGuessRoute implements TemplateViewRoute {
 
   static final String GUESS_PARAM = "myGuess";
   static final String MESSAGE_ATTR = "message";
+  static final String HINT_ATTR = "hint";
   static final String MESSAGE_TYPE_ATTR = "messageType";
   static final String YOU_WON_ATTR = "youWon";
+
 
   static final String ERROR_TYPE = "error";
   static final String BAD_GUESS = "Nope, try again...";
@@ -132,7 +134,17 @@ public class PostGuessRoute implements TemplateViewRoute {
     // no, but you have more guesses?
     else if (game.hasMoreGuesses()) {
       vm.put(GetGameRoute.GUESSES_LEFT_ATTR, game.guessesLeft());
-      return error(vm, BAD_GUESS);
+      // TODO: Add the number hint
+      String hint = "";
+      if (game.guessIsMore(guess)){
+        //TODO: "The number is higher than your guess"
+        hint = "HINT: The number is higher than your guess";
+      }
+      else{
+        //TODO: "The numbr is lowr than your guess"
+        hint = "HINT: The number is lower than your guess";
+      }
+      return error(vm, BAD_GUESS, hint);
     }
     // otherwise, you lost
     else {
@@ -144,13 +156,20 @@ public class PostGuessRoute implements TemplateViewRoute {
     }
   }
 
+  private ModelAndView error(Map<String, Object> vm, String message) {
+    vm.put(MESSAGE_ATTR, message);
+    vm.put(MESSAGE_TYPE_ATTR, ERROR_TYPE);
+    return new ModelAndView(vm, VIEW_NAME);
+  }
+
   //
   // Private methods
   //
 
-  private ModelAndView error(final Map<String, Object> vm, final String message) {
+  private ModelAndView error(final Map<String, Object> vm, final String message, final String hint) {
     vm.put(MESSAGE_ATTR, message);
     vm.put(MESSAGE_TYPE_ATTR, ERROR_TYPE);
+    vm.put(HINT_ATTR, hint);
     return new ModelAndView(vm, VIEW_NAME);
   }
 
