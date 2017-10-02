@@ -17,13 +17,13 @@ public class GuessGame {
    * The upper bound on the numbers to be guessed. This is public so that other
    * components to read it; especially for unit testing.
    */
-  public static final int UPPER_BOUND = 10;
+  public static int UPPER_BOUND = 10;
 
   /**
    * The number of guess attempts alloted. This is public so that other
    * components to read it; especially for unit testing.
    */
-  public static final int NUM_OF_GUESSES = 3;
+  public static int NUM_OF_GUESSES = 3;
 
   private static final Random RANDOM = new Random();
 
@@ -55,7 +55,6 @@ public class GuessGame {
     //
     this.numberToGuess = numberToGuess;
   }
-
   /**
    * Create a guessing game with a random number.
    */
@@ -141,5 +140,24 @@ public class GuessGame {
 
   public boolean guessIsMore(int myguess) {
     return myguess < numberToGuess;
+  }
+
+  public void setDifficulty(int difficulty) {
+    switch (difficulty){
+      case 0:
+        this.UPPER_BOUND = 10;
+        this.NUM_OF_GUESSES = 3;
+        break;
+      case 1:
+        this.UPPER_BOUND = 25;
+        this.NUM_OF_GUESSES = 5;
+        break;
+      case 2:
+        this.UPPER_BOUND = 25;
+        this.NUM_OF_GUESSES = 3;
+        break;
+      default:
+          System.out.println("Error while setting difficulty");
+    }
   }
 }

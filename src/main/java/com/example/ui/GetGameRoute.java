@@ -46,7 +46,7 @@ public class GetGameRoute implements TemplateViewRoute {
   public ModelAndView handle(Request request, Response response) {
     // retrieve the game object
     final GuessGame game = gameCenter.get(request.session());
-
+    game.setDifficulty(Integer.parseInt(request.queryParams("difficulty")));
     // build the View-Model
     final Map<String, Object> vm = new HashMap<>();
     vm.put(GetHomeRoute.TITLE_ATTR, TITLE);

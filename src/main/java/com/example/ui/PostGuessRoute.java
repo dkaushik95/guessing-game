@@ -135,7 +135,7 @@ public class PostGuessRoute implements TemplateViewRoute {
     else if (game.hasMoreGuesses()) {
       vm.put(GetGameRoute.GUESSES_LEFT_ATTR, game.guessesLeft());
       // TODO: Add the number hint
-      String hint = "";
+      String hint;
       if (game.guessIsMore(guess)){
         //TODO: "The number is higher than your guess"
         hint = "HINT: The number is higher than your guess";
