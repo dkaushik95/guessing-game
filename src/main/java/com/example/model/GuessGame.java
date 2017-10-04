@@ -143,21 +143,32 @@ public class GuessGame {
   }
 
   public void setDifficulty(int difficulty) {
+    System.out.println("Setting difficulty.....");
     switch (difficulty){
       case 0:
-        this.UPPER_BOUND = 10;
-        this.NUM_OF_GUESSES = 3;
+        UPPER_BOUND = 10;
+        NUM_OF_GUESSES = 3;
+        howManyGuessesLeft = NUM_OF_GUESSES;
+        System.out.println("Difficulty 0 set");
         break;
       case 1:
-        this.UPPER_BOUND = 25;
-        this.NUM_OF_GUESSES = 5;
+        UPPER_BOUND = 25;
+        NUM_OF_GUESSES = 5;
+        howManyGuessesLeft = NUM_OF_GUESSES;
+        System.out.println("Difficulty 1 set");
         break;
       case 2:
-        this.UPPER_BOUND = 25;
-        this.NUM_OF_GUESSES = 3;
+        UPPER_BOUND = 25;
+        NUM_OF_GUESSES = 3;
+        howManyGuessesLeft = NUM_OF_GUESSES;
+        System.out.println("Difficulty 2 set");
         break;
       default:
           System.out.println("Error while setting difficulty");
     }
+  }
+
+  public int getUpperBound() {
+    return UPPER_BOUND;
   }
 }

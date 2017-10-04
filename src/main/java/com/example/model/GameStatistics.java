@@ -1,5 +1,11 @@
 package com.example.model;
 
+
+import org.json.simple.JSONObject;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class GameStatistics {
     // attributes
     public static int GLOBAL_WINS = 0;
@@ -15,6 +21,11 @@ public class GameStatistics {
 
     public static void setGlobalWins(int globalWins) {
         GLOBAL_WINS = globalWins;
+        try {
+            updateFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static int getLocalWins() {
@@ -39,6 +50,11 @@ public class GameStatistics {
 
     public static void setTotalPlays(int totalPlays) {
         TOTAL_PLAYS = totalPlays;
+        try {
+            updateFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static double getGlobalAverageWins() throws java.lang.ArithmeticException{
@@ -47,5 +63,14 @@ public class GameStatistics {
 
     public static double getLocalAverageWins(){
         return (((double)LOCAL_WINS/(double)LOCAL_PLAYS)*100);
+    }
+
+    public static void updateFile() throws IOException {
+        FileWriter fw = new FileWriter("src/main/resources/globalStats.json");
+        JSONObject object = new JSONObject();
+        object.put("globalWins", GLOBAL_WINS);
+        object.put("globalGames", TOTAL_PLAYS);
+        fw.write(object.toJSONString());
+        fw.close();
     }
 }

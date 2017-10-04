@@ -50,8 +50,8 @@ public class PostGuessRoute implements TemplateViewRoute {
   /**
    * Make an error message when the guess is not in the guessing range.
    */
-  static String makeInvalidArgMessage(final String guessStr) {
-    return String.format("You entered %s; make a guess between zero and nine.", guessStr);
+  static String makeInvalidArgMessage(final String guessStr, int upper) {
+    return String.format("You entered %s; make a guess between zero and %d.", guessStr, upper);
   }
 
   //
@@ -109,13 +109,15 @@ public class PostGuessRoute implements TemplateViewRoute {
       guess = Integer.parseInt(guessStr);
     } catch (NumberFormatException e) {
       // re-display the guess form with an error message
+      vm.put(GetGameRoute.GAME_UPPER_BOUND,game.getUpperBound());
       return error(vm, makeBadArgMessage(guessStr));
     }
 
     // validate that the guess is in the range
     if (!game.isValidGuess(guess)) {
       // re-display the guess form with an error message
-      return error(vm, makeInvalidArgMessage(guessStr));
+      vm.put(GetGameRoute.GAME_UPPER_BOUND,game.getUpperBound());
+      return error(vm, makeInvalidArgMessage(guessStr, game.getUpperBound()));
     }
 
     // submit the guess to the game
@@ -144,6 +146,7 @@ public class PostGuessRoute implements TemplateViewRoute {
         //TODO: "The numbr is lowr than your guess"
         hint = "HINT: The number is lower than your guess";
       }
+      vm.put(GetGameRoute.GAME_UPPER_BOUND,game.getUpperBound());
       return error(vm, BAD_GUESS, hint);
     }
     // otherwise, you lost

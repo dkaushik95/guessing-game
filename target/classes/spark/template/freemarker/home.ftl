@@ -21,32 +21,32 @@
       <p>
         ${localStatsMessage}
       </p>
-        <select id="difficulty" onClick="changeDifficulty()">
-            <option value="0" selected>Easy</option>
-            <option value="1">Medium</option>
-            <option value="2">Hard</option>
+        <select id="difficulty" onchange="changeDifficulty()">
+            <option value="0" selected>Standard level</option>
+            <option value="1">Moderate level</option>
+            <option value="2">Difficult level</option>
         </select>
       <#if newSession>
         <p>
-          <a id="linkToGame" href="/game">Want to play a game?!?</a>
+          <a id="linkToGame" href="/game?difficulty=0">Want to play a game?!?</a>
         </p>
       <#else>
         <#if youWon>
           <p>
             Congratulations!  You must have read my mind.
             <br/><br/>
-            <a id="linkToGame" href="/game">Do it again</a>
+            <a id="linkToGame" href="/game?difficulty=1">Do it again</a>
           </p>
         <#else>
           <p>
             Aww, too bad.  Better luck next time.
             <br/><br/>
-            <a id="linkToGame" href="/game">How about it?</a>
+            <a id="linkToGame" href="/game?difficulty=2">How about it?</a>
           </p>
         </#if>
       </#if>
         <script>
-            document.getElementById("linkToGame").href = "/game?difficulty=" + document.getElementById("difficulty").value;
+//            document.getElementById("linkToGame").href = "/game?difficulty=" + document.getElementById("difficulty").value;
             function changeDifficulty(){
                 document.getElementById("linkToGame").href = "/game?difficulty=" + document.getElementById("difficulty").value;
             }

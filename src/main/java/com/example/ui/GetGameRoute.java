@@ -23,6 +23,7 @@ public class GetGameRoute implements TemplateViewRoute {
   static final String GUESSES_LEFT_ATTR = "guessesLeft";
   static final String TITLE = "Number Guess Game";
   static final String VIEW_NAME = "game_form.ftl";
+  static final String GAME_UPPER_BOUND = "upper_bound";
 
   private final GameCenter gameCenter;
 
@@ -51,6 +52,7 @@ public class GetGameRoute implements TemplateViewRoute {
     final Map<String, Object> vm = new HashMap<>();
     vm.put(GetHomeRoute.TITLE_ATTR, TITLE);
     vm.put(GAME_BEGINS_ATTR, game.isGameBeginning());
+    vm.put(GAME_UPPER_BOUND, game.getUpperBound());
     vm.put(GUESSES_LEFT_ATTR, game.guessesLeft());
     // render the Game Form view
     return new ModelAndView(vm, VIEW_NAME);

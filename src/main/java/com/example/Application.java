@@ -1,10 +1,14 @@
 package com.example;
 
-import java.io.InputStream;
+import java.io.*;
 import java.util.Objects;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import com.example.model.GameStatistics;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -34,7 +38,7 @@ public final class Application {
    * @param args
    *    Command line arguments; none expected.
    */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException, ParseException, InterruptedException {
     // initialize Logging
     try {
       ClassLoader classLoader = Application.class.getClassLoader();
@@ -44,7 +48,12 @@ public final class Application {
       e.printStackTrace();
       System.err.println("Could not initialize log manager because: " + e.getMessage());
     }
+    //TODO: set the value of global stats from file
+    JSONParser jsonParser = new JSONParser();
+    JSONObject a = (JSONObject) jsonParser.parse(new FileReader("src/main/resources/globalStats.json"));
 
+    GameStatistics.setGlobalWins(Integer.parseInt(a.get("globalWins").toString()));
+    GameStatistics.setTotalPlays(Integer.parseInt(a.get("globalGames").toString()));
     // create the one and only game center
     final GameCenter gameCenter = new GameCenter();
 
@@ -94,5 +103,4 @@ public final class Application {
 
     LOG.fine("Application initialization complete.");
   }
-
 }
