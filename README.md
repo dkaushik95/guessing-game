@@ -1,5 +1,7 @@
 # swen261-sample-webapp
 
+(Forking this to create a pull request for an assignment.)
+
 An online Number Guessing Game system built in Java 8 and Spark,
 a web micro-framework.
 
